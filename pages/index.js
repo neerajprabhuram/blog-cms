@@ -1,12 +1,8 @@
 import Head from 'next/head'
 import { PostCard, Categories, PostWidget } from '../components'
+import { getPosts } from '../services'
 
-const posts = [
-  { title: 'React Testing', excerpt: 'Learn React testing' },
-  { title: 'Next Testing', excerpt: 'Learn Next testing' },
-]
-
-const Home = () => {
+const Home = ({ posts }) => {
   return (
     <div className="container mx-auto mb-8 px-10 ">
       <Head>
@@ -29,6 +25,14 @@ const Home = () => {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const posts = (await getPosts()) || []
+
+  return {
+    props: { posts },
+  }
 }
 
 export default Home
